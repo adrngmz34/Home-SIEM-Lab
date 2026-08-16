@@ -25,6 +25,34 @@ The primary objective of this project was to transition from theoretical cyberse
 
 ---
 
+## Technical Infrastructure Baseline
+
+| Host / Node | Operating System | Role / Component | Specifications & Service Ports |
+| :--- | :--- | :--- | :--- |
+| **Wazuh Manager** | RHEL / AlmaLinux OVA | Central SIEM / Indexer / Dashboard | VirtualBox VM, HTTPS (Port 443), Ingestion (1514/1515 TCP) |
+| **Primary Workstation** | Windows 11 Pro | Monitored Client Endpoint | Wazuh Agent Daemon (`wazuh`), Syscollector, FIM |
+| **Server Host (Planned)** | Windows 11 Pro (Inspiron 5310) | 24/7 Decoupled Server Node | Docker Desktop (WSL2), Hyper-V, External Storage |
+
+---
+
+## Architecture Flow
+
+```text
+┌───────────────────────────────────────────────────────────────┐
+│                    Wazuh Central Manager                       │
+│  • Web Dashboard & REST API (Port 443)                        │
+│  • NVD / CVE Feed Correlation (Accelerated 1-Hour Cycle)      │
+│  • Decoupled Ingestion Pipeline (TCP 1514 / 1515)             │
+└───────────────────────────────┬───────────────────────────────┘
+                                │
+                                ▼
+┌───────────────────────────────────────────────────────────────┐
+│                  Enrolled Windows Endpoint                    │
+│  • Telemetry Daemon (`wazuh` background service)             │
+│  • Real-Time File Integrity Monitoring (Syscheck)             │
+│  • System Collector (`syscollector` OS & Software Inventory)  │
+└───────────────────────────────────────────────────────────────┘
+
 ### 🚀 Future Roadmap & Planned Configurations
 
 This initial deployment represents Phase 1 of a multi-tier infrastructure strategy. Planned upcoming projects include:
