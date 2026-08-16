@@ -50,6 +50,8 @@ The primary objective of this project was to transition from theoretical cyberse
 │  • System Collector (`syscollector` OS & Software Inventory)  │
 └───────────────────────────────────────────────────────────────┘
 
+
+---
 ## 🚀 Future Roadmap & Planned Configurations
 
 This initial deployment represents Phase 1 of a multi-tier infrastructure strategy. Planned upcoming projects include:
