@@ -1,7 +1,5 @@
 # Home-SIEM-Lab
 Wazuh Agents for home LAN
-# Home-SIEM-Lab
-Wazuh Agents for home LAN
 # 🛡️ Enterprise SIEM & EDR Implementation: Wazuh Security Operations
 
 ## 📖 Project Overview & Narrative
@@ -16,15 +14,6 @@ In this project, I engineered and deployed a functional **Security Information a
 
 ---
 
-### Why I Did It
-The primary objective of this project was to transition from theoretical cybersecurity knowledge to hands-on, enterprise-grade Security Operations Center (SOC) engineering. 
-
-1. **Gaining Centralized Visibility:** Disparate endpoint logs are ineffective without centralized correlation. Building this SIEM layer provided a "single pane of glass" to monitor endpoint health, security events, and unauthorized system modifications in real time.
-2. **Proactive Risk Reduction:** Rather than passively waiting for security incidents, configuring active vulnerability scanning allowed me to identify unpatched software dependencies and prioritize system updates before exploitation.
-3. **Real-World Engineering Experience:** Setting up this environment provided practical experience in network interface troubleshooting, Windows service management, administrative credential rotation, and SIEM tuning—skills directly applicable to enterprise SOC and SysAdmin roles.
-
----
-
 ## Technical Infrastructure Baseline
 
 | Host / Node | Operating System | Role / Component | Specifications & Service Ports |
@@ -32,6 +21,14 @@ The primary objective of this project was to transition from theoretical cyberse
 | **Wazuh Manager** | RHEL / AlmaLinux OVA | Central SIEM / Indexer / Dashboard | VirtualBox VM, HTTPS (Port 443), Ingestion (1514/1515 TCP) |
 | **Primary Workstation** | Windows 11 Pro | Monitored Client Endpoint | Wazuh Agent Daemon (`wazuh`), Syscollector, FIM |
 | **Server Host (Planned)** | Windows 11 Pro (Inspiron 5310) | 24/7 Decoupled Server Node | Docker Desktop (WSL2), Hyper-V, External Storage |
+
+
+### Why I Did It
+The primary objective of this project was to transition from theoretical cybersecurity knowledge to hands-on, enterprise-grade Security Operations Center (SOC) engineering. 
+
+1. **Gaining Centralized Visibility:** Disparate endpoint logs are ineffective without centralized correlation. Building this SIEM layer provided a "single pane of glass" to monitor endpoint health, security events, and unauthorized system modifications in real time.
+2. **Proactive Risk Reduction:** Rather than passively waiting for security incidents, configuring active vulnerability scanning allowed me to identify unpatched software dependencies and prioritize system updates before exploitation.
+3. **Real-World Engineering Experience:** Setting up this environment provided practical experience in network interface troubleshooting, Windows service management, administrative credential rotation, and SIEM tuning—skills directly applicable to enterprise SOC and SysAdmin roles.
 
 ---
 
@@ -53,7 +50,7 @@ The primary objective of this project was to transition from theoretical cyberse
 │  • System Collector (`syscollector` OS & Software Inventory)  │
 └───────────────────────────────────────────────────────────────┘
 
-### 🚀 Future Roadmap & Planned Configurations
+## 🚀 Future Roadmap & Planned Configurations
 
 This initial deployment represents Phase 1 of a multi-tier infrastructure strategy. Planned upcoming projects include:
 
