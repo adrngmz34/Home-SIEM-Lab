@@ -101,7 +101,54 @@ The primary objective of this project was to transition from theoretical cyberse
 
 ---
 
-## 🚀 Future Roadmap & Planned Configurations
+## Gateway Hardening & Client DNS Integration
+
+The primary gateway was hardened and client devices were moved to the 5310-hosted Pi-hole DNS service. Exact private addresses and device MAC addresses are intentionally omitted from this public repository; use local router and host settings for those values.
+
+### Gateway controls
+
+| Area | Configured state | Security purpose |
+|---|---|---|
+| Address management | DHCP static assignment for the 5310 host | Keeps the DNS host address stable across reboots. |
+| Wi-Fi security | WPA Personal Transition Mode | Allows WPA3-SAE clients while retaining WPA2-PSK compatibility. |
+| Protected Management Frames | Capable / Optional | Supports PMF for WPA3 clients without excluding WPA2-only clients. |
+| WPS | Disabled | Removes WPS PIN-based onboarding exposure. |
+| Firewall | Medium | Applies the gateway's selected inbound and outbound filtering. |
+| WAN blocking | Enabled | Suppresses responses to unsolicited WAN probes. |
+| Fragmented packets | Blocked | Reduces exposure to fragmented-packet evasion and malformed-packet attacks. |
+| Port scan detection | Enabled | Detects and blocks rapid probing activity. |
+| IP flood detection | Enabled | Applies gateway flood protections. |
+| UPnP | Disabled | Prevents clients from automatically creating inbound port mappings. |
+| SIP ALG | Disabled | Avoids rewriting SIP traffic in ways that can disrupt voice and real-time media. |
+| Firewall logging | Blocked traffic and configuration events | Captures security-relevant events while limiting permitted-traffic log volume. |
+
+### Client onboarding and DNS
+
+The Nintendo Switch initially rejected the network under mandatory WPA3/PMF settings. WPA Personal Transition Mode restored compatibility, allowing the Switch to connect with WPA2-PSK/AES. The Switch and other clients use the 5310 host's Pi-hole DNS service; the actual LAN address is not published here. Keep client DNS pointed at the reserved host address, and leave client IP, subnet mask, and gateway assignment on DHCP unless the router administrator specifies otherwise.
+
+The Pi-hole container publishes DNS on the Docker host's LAN interfaces. The host must remain powered on and connected for clients to resolve DNS through Pi-hole. The Pi-hole upstream resolver configuration is separate from client DNS settings.
+
+### Security control mapping
+
+| Boundary / capability | NIST SP 800-53 Rev. 5 | ISO/IEC 27001:2022 | Evidence |
+|---|---|---|---|
+| Edge gateway | SC-7 | A.8.20 | WAN blocking, port scan detection, and firewall filtering. |
+| Wireless perimeter | IA-5 | A.8.5 | WPS disabled; WPA transition mode enabled. |
+| Address management | CM-8 | A.8.9 | DHCP static assignment for the 5310 DNS host. |
+| DNS filtering | SI-3 | A.8.23 | Client DNS routed through Pi-hole. |
+| Audit logging | AU-2 / AU-6 | A.8.15 | Blocked-traffic and configuration-event logging. |
+
+These mappings document the intended control alignment and do not constitute an independent compliance assessment.
+
+---
+## Related Docker homelab project
+
+The companion Docker Desktop homelab is maintained separately in `Home-Docker-Lab`.
+
+- Docker services and Pi-hole DNS: `Home-Docker-Lab`
+- Wazuh VirtualBox SIEM and Windows endpoint: this repository
+
+Keep credentials, API keys, agent keys, and private network details out of both repositories.
 
 * **24/7 Server Decoupling & Containerization (Phase 2):** 
   Migrate the central Wazuh Manager stack from a local workstation VM to a dedicated, always-on server host (Dell Inspiron 13 5310) running **Docker Desktop via WSL2**. This ensures continuous 24/7 security ingestion regardless of the client workstation’s power state.
